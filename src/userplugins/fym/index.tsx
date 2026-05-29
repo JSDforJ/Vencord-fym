@@ -15,9 +15,12 @@ import {
     removeContextMenuPatch,
 } from "@api/ContextMenu";
 import { DownArrow } from "@components/Icons";
-import { insertTextIntoChatInputBox, sendMessage } from "@utils/discord";
+import { insertTextIntoChatInputBox } from "@utils/discord";
 import definePlugin from "@utils/types";
+import { findByPropsLazy } from "@webpack";
 import { Menu } from "@webpack/common";
+
+const MessageActions = findByPropsLazy("sendMessage");
 
 const messageContextMenuPatch: NavContextMenuPatchCallback = (
     children,
@@ -29,15 +32,28 @@ const messageContextMenuPatch: NavContextMenuPatchCallback = (
     // Find an existing group to insert into
     const group = findGroupChildrenByChildId("copy-text", children);
 
+    const content = `fym "${message.content}"`;
+
     if (group) {
         group.push(
             <Menu.MenuItem
                 id="fym-action"
                 label="Fuck you mean"
                 action={() => {
-                    sendMessage(channel.id, {
-                        content: `fym "${message.content}"`,
-                    });
+                    MessageActions.sendMessage(
+                        channel.id,
+                        { content },
+                        undefined,
+                        {
+                            messageReference: {
+                                channel_id: channel.id,
+                                message_id: message.id,
+                            },
+                            allowedMentions: {
+                                replied_user: false, // false = silent reply
+                            },
+                        },
+                    );
                 }}
                 icon={DownArrow}
             />,
