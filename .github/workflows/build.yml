@@ -31,9 +31,6 @@ jobs:
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
 
-            - name: Build web
-              run: pnpm buildWebStandalone
-
             - name: Build
               run: pnpm build --standalone
 
@@ -52,7 +49,30 @@ jobs:
             - name: Upload build artifact
               uses: actions/upload-artifact@v7
               with:
+                  name: standalone
                   path: dist/*
+
+            - name: Build web
+              run: pnpm buildWebStandalone
+
+            - name: Generate plugin list
+              run: pnpm generatePluginJson dist/plugins.json dist/plugin-readmes.json
+
+            - name: Clean up obsolete files
+              run: |
+                  rm -rf dist/*-unpacked dist/vendor Vencord.user.css vencordDesktopRenderer.css vencordDesktopRenderer.css.map
+
+            - name: Upload build artifact
+              uses: actions/upload-artifact@v7
+              with:
+                  path: extension-chrome.zip
+                  archive: false
+
+            - name: Upload build artifact
+              uses: actions/upload-artifact@v7
+              with:
+                  path: extension-firefox.zip
+                  archive: false
 
             - name: Upload DevBuild as release
               if: github.repository == 'Vendicated/Vencord'
