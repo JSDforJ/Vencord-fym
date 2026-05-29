@@ -49,6 +49,11 @@ jobs:
               run: |
                   echo "release_tag=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
+            - name: Upload build artifact
+              uses: actions/upload-artifact@v7
+              with:
+                  path: dist/*
+
             - name: Upload DevBuild as release
               if: github.repository == 'Vendicated/Vencord'
               run: |
