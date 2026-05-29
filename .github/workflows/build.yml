@@ -65,13 +65,13 @@ jobs:
             - name: Upload build artifact
               uses: actions/upload-artifact@v7
               with:
-                  path: extension-chrome.zip
+                  path: dist/extension-chrome.zip
                   archive: false
 
             - name: Upload build artifact
               uses: actions/upload-artifact@v7
               with:
-                  path: extension-firefox.zip
+                  path: dist/extension-firefox.zip
                   archive: false
 
             - name: Upload DevBuild as release
