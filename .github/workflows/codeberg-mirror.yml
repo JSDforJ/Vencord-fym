@@ -1,0 +1,11 @@
+name: codeberg-mirror empty
+
+on:
+  workflow_dispatch:
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Placeholder mirror step
+        run: echo "Mirror workflow placeholder"

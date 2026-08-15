@@ -1,0 +1,11 @@
+name: publish empty
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Placeholder publish step
+        run: echo "Publish workflow placeholder"

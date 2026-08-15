@@ -1,0 +1,11 @@
+name: reportBrokenPlugins empty
+
+on:
+  workflow_dispatch:
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Placeholder report step
+        run: echo "Report workflow placeholder"
